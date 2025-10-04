@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import DashboardLayout from '../components/DashboardLayout'
+import { localDatabase } from '../services/localDatabase'
 
 interface FormData {
   // Step 1 - Personal Info
@@ -52,7 +53,7 @@ export default function ApplicantPortal() {
   const [submissionId, setSubmissionId] = useState('')
   const [applications, setApplications] = useState<Application[]>([])
 
-  const totalSteps = 6
+  const totalSteps = 7
   const progress = (currentStep / totalSteps) * 100
 
   const updateFormData = (updates: Partial<FormData>) => {
@@ -84,6 +85,8 @@ export default function ApplicantPortal() {
       case 5:
         return true // AI Pre-Check - always valid
       case 6:
+        return true // ARL Assessment - always valid
+      case 7:
         return true // Submit - validation done in step 5
       default:
         return false
@@ -91,12 +94,37 @@ export default function ApplicantPortal() {
   }
 
   const handleSubmit = () => {
-    const newApplication: Application = {
-      id: `APP-${Date.now()}`,
+    const newApplication = localDatabase.createApplication({
       title: formData.abstract.substring(0, 50) + '...',
+      applicant: formData.piName,
+      institution: formData.institution,
+      department: formData.department,
+      email: formData.email,
       status: 'Submitted',
-      submittedDate: new Date().toLocaleDateString()
-    }
+      submittedDate: new Date().toLocaleDateString(),
+      dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString(), // 30 days from now
+      budget: getTotalBudget(),
+      duration: '24 months', // Default duration
+      abstract: formData.abstract,
+      keywords: formData.keywords,
+      documents: {
+        proposal: formData.proposalFile?.name || '',
+        ethics: formData.ethicsDoc?.name || '',
+        coi: formData.coiDisclosure?.name || '',
+        cvs: formData.cvs.map(cv => cv.name),
+        collaborationLetters: formData.collaborationLetters.map(letter => letter.name)
+      },
+      flags: {
+        eligibility: [],
+        compliance: [],
+        conflicts: []
+      },
+      reviewers: {
+        assigned: [],
+        completed: [],
+        conflicts: []
+      }
+    })
     
     setSubmissionId(newApplication.id)
     setApplications(prev => [newApplication, ...prev])
@@ -167,9 +195,17 @@ export default function ApplicantPortal() {
                     <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(app.status)}`}>
                       {app.status}
                     </span>
-                    <button className="bg-[#05585F] text-white px-4 py-2 rounded-lg hover:bg-[#00A29D] transition text-sm">
-                      View Details
-                    </button>
+                    <div className="flex space-x-2">
+                      <button className="bg-[#05585F] text-white px-4 py-2 rounded-lg hover:bg-[#00A29D] transition text-sm">
+                        View Details
+                      </button>
+                      <a 
+                        href={`/arl/${app.id}`}
+                        className="bg-[#00A29D] text-white px-4 py-2 rounded-lg hover:bg-[#05585F] transition text-sm"
+                      >
+                        ARL Assessment
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -488,8 +524,60 @@ export default function ApplicantPortal() {
           </div>
         )}
 
-        {/* Step 6 - Submit */}
+        {/* Step 6 - ARL Assessment */}
         {currentStep === 6 && (
+          <div className="bg-white rounded-2xl shadow-md p-6 mb-6">
+            <h2 className="text-xl font-bold text-[#202538] mb-6">ARL Assessment</h2>
+            <div className="space-y-6">
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <h3 className="font-semibold text-blue-900 mb-2">🚀 NASA-Inspired Application Readiness Assessment</h3>
+                <p className="text-blue-800 text-sm mb-4">
+                  Your application will be evaluated using NASA's Application Readiness Level (ARL) framework to assess real-world applicability and decision-making impact.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-[#05585F]">1-3</div>
+                    <div className="text-gray-600">Discovery & Feasibility</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-[#00A29D]">4-6</div>
+                    <div className="text-gray-600">Development & Validation</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-[#05585F]">7-9</div>
+                    <div className="text-gray-600">Deployment & Sustained Use</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                <h4 className="font-semibold text-green-900 mb-2">Assessment Benefits</h4>
+                <ul className="text-green-800 text-sm space-y-1">
+                  <li>• Comprehensive feasibility benchmarking across 6 dimensions</li>
+                  <li>• Evidence-based milestone tracking (ARL 1-9)</li>
+                  <li>• External reputation signals for reviewer selection</li>
+                  <li>• Actionable recommendations for improvement</li>
+                  <li>• Enhanced reviewer matching with ARL context</li>
+                </ul>
+              </div>
+
+              <div className="text-center">
+                <a 
+                  href={`/arl/${submissionId || 'new'}`}
+                  className="bg-[#05585F] text-white px-8 py-3 rounded-lg hover:bg-[#00A29D] transition font-semibold inline-block"
+                >
+                  Start ARL Assessment
+                </a>
+                <p className="text-sm text-gray-600 mt-2">
+                  Complete the 6-question STB interview and review your ARL progress
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Step 7 - Submit */}
+        {currentStep === 7 && (
           <div className="bg-white rounded-2xl shadow-md p-6 mb-6 text-center">
             <h2 className="text-xl font-bold text-[#202538] mb-6">Ready to Submit</h2>
             <p className="text-[#202538] mb-6">Review your application and submit when ready.</p>

@@ -1,6 +1,58 @@
+import { useState, useEffect } from 'react'
 import DashboardLayout from '../components/DashboardLayout'
+import { localDatabase } from '../services/localDatabase'
+import type { Application } from '../services/localDatabase'
 
 export default function AdminDashboard() {
+  const [applications, setApplications] = useState<Application[]>([])
+  const [stats, setStats] = useState({
+    total: 0,
+    underReview: 0,
+    awarded: 0,
+    rejected: 0,
+    pending: 0
+  })
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const allApplications = localDatabase.getAllApplications()
+    const applicationStats = localDatabase.getApplicationStats()
+    
+    setApplications(allApplications)
+    setStats(applicationStats)
+    setIsLoading(false)
+  }, [])
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'Submitted': return 'bg-gray-100 text-gray-800'
+      case 'Under Review': return 'bg-blue-100 text-blue-800'
+      case 'Decision Pending': return 'bg-yellow-100 text-yellow-800'
+      case 'Awarded': return 'bg-green-100 text-green-800'
+      case 'Rejected': return 'bg-red-100 text-red-800'
+      default: return 'bg-gray-100 text-gray-800'
+    }
+  }
+
+  const getFlagColor = (flags: string[]) => {
+    if (flags.length === 0) return 'bg-green-100 text-green-800'
+    if (flags.length <= 2) return 'bg-yellow-100 text-yellow-800'
+    return 'bg-red-100 text-red-800'
+  }
+
+  if (isLoading) {
+    return (
+      <DashboardLayout userType="admin">
+        <div className="flex items-center justify-center h-64">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-[#05585F] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading applications...</p>
+          </div>
+        </div>
+      </DashboardLayout>
+    )
+  }
+
   return (
     <DashboardLayout userType="admin">
       <div className="space-y-6">
@@ -21,7 +73,7 @@ export default function AdminDashboard() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Total Applications</p>
-                <p className="text-2xl font-semibold text-gray-900">24</p>
+                <p className="text-2xl font-semibold text-gray-900">{stats.total}</p>
               </div>
             </div>
           </div>
@@ -34,8 +86,8 @@ export default function AdminDashboard() {
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Eligibility Flags</p>
-                <p className="text-2xl font-semibold text-gray-900">8</p>
+                <p className="text-sm font-medium text-gray-600">Under Review</p>
+                <p className="text-2xl font-semibold text-gray-900">{stats.underReview}</p>
               </div>
             </div>
           </div>
@@ -48,8 +100,10 @@ export default function AdminDashboard() {
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Conflict Flags</p>
-                <p className="text-2xl font-semibold text-gray-900">3</p>
+                <p className="text-sm font-medium text-gray-600">Eligibility Flags</p>
+                <p className="text-2xl font-semibold text-gray-900">
+                  {applications.reduce((sum, app) => sum + app.flags.eligibility.length, 0)}
+                </p>
               </div>
             </div>
           </div>
@@ -62,8 +116,8 @@ export default function AdminDashboard() {
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Completed Reviews</p>
-                <p className="text-2xl font-semibold text-gray-900">12</p>
+                <p className="text-sm font-medium text-gray-600">Awarded</p>
+                <p className="text-2xl font-semibold text-gray-900">{stats.awarded}</p>
               </div>
             </div>
           </div>
@@ -83,49 +137,41 @@ export default function AdminDashboard() {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Flags</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reviewers</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Timeline</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ARL</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div>
-                      <div className="text-sm font-medium text-gray-900">MS Research Grant #2024-001</div>
-                      <div className="text-sm text-gray-500">Dr. Sarah Johnson</div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                      Under Review
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                      Missing IRB
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2 assigned</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Due: Dec 15</td>
-                </tr>
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div>
-                      <div className="text-sm font-medium text-gray-900">Clinical Trial Grant #2024-002</div>
-                      <div className="text-sm text-gray-500">Dr. Michael Chen</div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                      Approved
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                      Clean
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">3 completed</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Completed: Nov 28</td>
-                </tr>
+                {applications.map((app) => (
+                  <tr key={app.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div>
+                        <div className="text-sm font-medium text-gray-900">{app.title}</div>
+                        <div className="text-sm text-gray-500">{app.applicant}</div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(app.status)}`}>
+                        {app.status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getFlagColor(app.flags.eligibility)}`}>
+                        {app.flags.eligibility.length === 0 ? 'Clean' : `${app.flags.eligibility.length} flags`}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {app.reviewers.assigned.length} assigned
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      Due: {app.dueDate}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm">
+                      <a href={`/arl/${app.id}`} className="text-[#05585F] hover:text-[#00A29D] font-medium">
+                        ARL Assessment
+                      </a>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

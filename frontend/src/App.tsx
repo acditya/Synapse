@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import nmssLogo from '/National-MS-Society-1024x1024.avif'
 import ApplicantDashboard from './pages/ApplicantDashboard'
 import ApplicantPortal from './pages/ApplicantPortal'
@@ -8,6 +8,7 @@ import ReviewerAssigned from './pages/ReviewerAssigned'
 import ReviewerReviewForm from './pages/ReviewerReviewForm'
 import ReviewerCompleted from './pages/ReviewerCompleted'
 import ReviewerProfile from './pages/ReviewerProfile'
+import ARLAssessmentPage from './pages/ARLAssessment'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/reviewer/review/:id" element={<ReviewerReviewForm />} />
                 <Route path="/reviewer/completed" element={<ReviewerCompleted />} />
                 <Route path="/reviewer/profile" element={<ReviewerProfile />} />
+                <Route path="/arl/:applicationId" element={<ARLAssessmentPage />} />
       </Routes>
     </Router>
   )

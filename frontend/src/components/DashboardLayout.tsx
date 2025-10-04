@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import nmssLogo from '/National-MS-Society-1024x1024.avif'
 
 interface DashboardLayoutProps {
