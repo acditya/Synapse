@@ -20,7 +20,11 @@ const ProposalSubmissionSection = ({
     summary: string
     keywords: string[]
     priorities: string[]
-  }>({ summary: '', keywords: [], priorities: [] })
+  }>({ 
+    summary: "This proposal focuses on investigating the longitudinal relationship between Epstein-Barr virus (EBV) infection and multiple sclerosis (MS) risk using a large population-based cohort. The research aims to examine EBV seroconversion patterns, viral load dynamics, and their relationship to MS development, while controlling for genetic and environmental factors. This research has the potential to revolutionize our understanding of MS etiology and inform novel prevention strategies.",
+    keywords: ["Epstein-Barr virus", "Multiple sclerosis", "Longitudinal study", "Epidemiology", "Neuroinflammation", "Autoimmune disease", "Population-based cohort"],
+    priorities: ["MS Etiology Research Priority", "Environmental Factors in MS", "EBV-MS Relationship Research", "Epidemiological Studies", "Prevention Research"]
+  })
   
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -152,8 +156,47 @@ const ProposalSubmissionSection = ({
             </span>
           </div>
           {formData.proposalFile && (
-            <div style={{ marginTop: '1rem', padding: '0.5rem', backgroundColor: 'var(--light-sea-green)', color: 'var(--white)', borderRadius: '0.25rem' }}>
-              ✓ {formData.proposalFile.name} ({(formData.proposalFile.size / 1024 / 1024).toFixed(2)} MB)
+            <div style={{ 
+              marginTop: '1rem', 
+              padding: '1rem', 
+              backgroundColor: 'rgba(0, 123, 191, 0.1)', 
+              border: '2px solid var(--light-sea-green)', 
+              borderRadius: '0.5rem',
+              position: 'relative'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div style={{ 
+                  fontSize: '1.5rem',
+                  background: 'var(--light-sea-green)',
+                  borderRadius: '50%',
+                  width: '40px',
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white'
+                }}>
+                  📄
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 'bold', color: 'var(--nmss-black)', marginBottom: '0.25rem' }}>
+                    ✓ {formData.proposalFile.name}
+                  </div>
+                  <div style={{ fontSize: '0.875rem', color: 'var(--nmss-medium-gray)' }}>
+                    PDF Document • 2.4 MB • Uploaded Successfully
+                  </div>
+                </div>
+                <div style={{
+                  background: 'var(--success-green)',
+                  color: 'white',
+                  padding: '0.25rem 0.75rem',
+                  borderRadius: '1rem',
+                  fontSize: '0.75rem',
+                  fontWeight: 'bold'
+                }}>
+                  ANALYZED
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -280,6 +323,242 @@ const ProposalSubmissionSection = ({
             </div>
           </div>
         )}
+      </div>
+
+      {/* Collaborators Section */}
+      <div className="form-group">
+        <label className="form-label">
+          Research Team & Collaborators
+          <span style={{ fontSize: '0.875rem', fontWeight: 'normal', color: 'var(--medium-gray)' }}>
+            (Add team members and collaborators)
+          </span>
+        </label>
+        
+        <div style={{ 
+          border: '2px dashed var(--nmss-orange)', 
+          borderRadius: '0.5rem', 
+          padding: '1.5rem', 
+          textAlign: 'center',
+          backgroundColor: 'rgba(255, 107, 53, 0.05)',
+          marginBottom: '1rem'
+        }}>
+          <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>👥</div>
+          <div style={{ fontWeight: 'bold', marginBottom: '0.5rem', color: 'var(--nmss-orange)' }}>
+            Add Collaborators
+          </div>
+          <div style={{ fontSize: '0.875rem', color: 'var(--nmss-medium-gray)', marginBottom: '1rem' }}>
+            Invite team members, co-investigators, and collaborators to join this research proposal
+          </div>
+          <button
+            type="button"
+            className="btn btn-outline"
+            style={{ 
+              borderColor: 'var(--nmss-orange)', 
+              color: 'var(--nmss-orange)',
+              fontSize: '0.875rem',
+              padding: '0.5rem 1rem'
+            }}
+          >
+            + Add Collaborator
+          </button>
+        </div>
+
+        {/* Pre-loaded Collaborators for Demo */}
+        <div style={{ marginBottom: '1rem' }}>
+          <div style={{ fontSize: '0.875rem', fontWeight: 'bold', marginBottom: '0.75rem', color: 'var(--nmss-black)' }}>
+            Current Team Members:
+          </div>
+          
+          {/* Principal Investigator */}
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '0.75rem', 
+            padding: '0.75rem', 
+            backgroundColor: 'rgba(0, 123, 191, 0.1)', 
+            border: '1px solid var(--light-sea-green)', 
+            borderRadius: '0.5rem',
+            marginBottom: '0.5rem'
+          }}>
+            <div style={{ 
+              width: '40px', 
+              height: '40px', 
+              borderRadius: '50%', 
+              backgroundColor: 'var(--nmss-orange)', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: '0.875rem'
+            }}>
+              AA
+            </div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: 'bold', color: 'var(--nmss-black)' }}>
+                Dr. Alberto Ascherio
+              </div>
+              <div style={{ fontSize: '0.875rem', color: 'var(--nmss-medium-gray)' }}>
+                Principal Investigator • Harvard University
+              </div>
+            </div>
+            <div style={{
+              background: 'var(--nmss-orange)',
+              color: 'white',
+              padding: '0.25rem 0.5rem',
+              borderRadius: '0.25rem',
+              fontSize: '0.75rem',
+              fontWeight: 'bold'
+            }}>
+              PI
+            </div>
+          </div>
+
+          {/* Co-Investigators */}
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '0.75rem', 
+            padding: '0.75rem', 
+            backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+            border: '1px solid #E5E7EB', 
+            borderRadius: '0.5rem',
+            marginBottom: '0.5rem'
+          }}>
+            <div style={{ 
+              width: '40px', 
+              height: '40px', 
+              borderRadius: '50%', 
+              backgroundColor: 'var(--light-sea-green)', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: '0.875rem'
+            }}>
+              KB
+            </div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: 'bold', color: 'var(--nmss-black)' }}>
+                Dr. Kjetil Bjornevik
+              </div>
+              <div style={{ fontSize: '0.875rem', color: 'var(--nmss-medium-gray)' }}>
+                Co-Investigator • Harvard T.H. Chan School of Public Health
+              </div>
+            </div>
+            <div style={{
+              background: 'var(--light-sea-green)',
+              color: 'white',
+              padding: '0.25rem 0.5rem',
+              borderRadius: '0.25rem',
+              fontSize: '0.75rem',
+              fontWeight: 'bold'
+            }}>
+              Co-I
+            </div>
+          </div>
+
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '0.75rem', 
+            padding: '0.75rem', 
+            backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+            border: '1px solid #E5E7EB', 
+            borderRadius: '0.5rem',
+            marginBottom: '0.5rem'
+          }}>
+            <div style={{ 
+              width: '40px', 
+              height: '40px', 
+              borderRadius: '50%', 
+              backgroundColor: 'var(--light-sea-green)', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: '0.875rem'
+            }}>
+              MC
+            </div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: 'bold', color: 'var(--nmss-black)' }}>
+                Dr. Marianna Cortese
+              </div>
+              <div style={{ fontSize: '0.875rem', color: 'var(--nmss-medium-gray)' }}>
+                Co-Investigator • Harvard Medical School
+              </div>
+            </div>
+            <div style={{
+              background: 'var(--light-sea-green)',
+              color: 'white',
+              padding: '0.25rem 0.5rem',
+              borderRadius: '0.25rem',
+              fontSize: '0.75rem',
+              fontWeight: 'bold'
+            }}>
+              Co-I
+            </div>
+          </div>
+
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '0.75rem', 
+            padding: '0.75rem', 
+            backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+            border: '1px solid #E5E7EB', 
+            borderRadius: '0.5rem'
+          }}>
+            <div style={{ 
+              width: '40px', 
+              height: '40px', 
+              borderRadius: '50%', 
+              backgroundColor: 'var(--light-sea-green)', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: '0.875rem'
+            }}>
+              JL
+            </div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: 'bold', color: 'var(--nmss-black)' }}>
+                Dr. Jeffrey Kuhle
+              </div>
+              <div style={{ fontSize: '0.875rem', color: 'var(--nmss-medium-gray)' }}>
+                Collaborator • University Hospital Basel
+              </div>
+            </div>
+            <div style={{
+              background: 'var(--success-green)',
+              color: 'white',
+              padding: '0.25rem 0.5rem',
+              borderRadius: '0.25rem',
+              fontSize: '0.75rem',
+              fontWeight: 'bold'
+            }}>
+              COL
+            </div>
+          </div>
+        </div>
+
+        <div className="ai-suggestion">
+          <h4>🤝 Collaboration Benefits</h4>
+          <p>
+            Adding collaborators helps strengthen your proposal by demonstrating:
+          </p>
+          <ul style={{ marginLeft: '1.5rem', marginTop: '0.5rem' }}>
+            <li>Multi-institutional expertise and resources</li>
+            <li>Diverse perspectives and methodologies</li>
+            <li>Enhanced data collection and analysis capabilities</li>
+            <li>Stronger potential for impactful research outcomes</li>
+          </ul>
+        </div>
       </div>
 
       {/* AI Pre-review Feedback */}

@@ -48,82 +48,103 @@ const AIAnalysisSection = ({
       
       // Mock AI analysis results
       const mockAnalysis = {
-        overallScore: 78,
+        overallScore: 94,
         strengths: [
-          "Strong focus on neuroinflammation mechanisms",
-          "Clear translational potential",
-          "Well-defined methodology",
-          "Experienced research team"
+          "Exceptional research expertise with 170 h-index and 189,679 citations",
+          "Pioneering work on EBV-MS relationship published in Science (2022)",
+          "Extensive experience in MS epidemiology and environmental factors",
+          "Strong publication record in top-tier journals (Science, Nature, NEJM, JAMA)",
+          "Clear translational potential with established research network",
+          "Methodologically sound longitudinal cohort design"
         ],
         areasForImprovement: [
-          "Limited discussion of patient engagement",
-          "Unclear timeline for clinical translation",
-          "Missing cost-effectiveness analysis"
+          "Consider including patient engagement strategies",
+          "Could expand on community outreach initiatives"
         ],
         nmssAlignment: [
-          "Neuroinflammation Research Priority",
-          "Biomarker Development",
-          "Therapeutic Innovation"
+          "Advancing Innovative MS Treatments",
+          "MS Epidemiology in UAE",
+          "Genetic Factors in MS",
+          "MS Risk Factors in UAE Population",
+          "Treatment Efficacy in UAE Populations"
         ],
         questions: [
           {
-            id: "patient-impact",
-            question: "How will your research directly benefit MS patients in the next 5-10 years?",
+            id: "ebv-prevention",
+            question: "How will your EBV-MS findings translate into practical prevention strategies for MS?",
             category: "impact" as const,
             priority: "high" as const,
-            context: "NMSS prioritizes research with clear patient impact and translational potential.",
+            context: "Given your groundbreaking Science publication showing EBV as a necessary cause of MS, NMSS is particularly interested in how this research will lead to actionable prevention strategies.",
             suggestions: [
-              "Describe specific patient populations that would benefit",
-              "Explain how findings could lead to new treatments",
-              "Mention potential for early diagnosis or prevention"
+              "Describe potential EBV vaccination strategies for MS prevention",
+              "Explain how EBV monitoring could identify high-risk individuals",
+              "Detail how findings could inform public health policies for MS prevention",
+              "Mention potential for EBV-targeted therapies in MS treatment"
             ]
           },
           {
-            id: "diversity-inclusion",
-            question: "How will you ensure diverse representation in your study population?",
+            id: "global-representation",
+            question: "How will you ensure global representation in your 50,000+ participant cohort, especially from regions with varying EBV prevalence?",
             category: "methodology" as const,
             priority: "high" as const,
-            context: "NMSS emphasizes inclusive research that represents all MS patients.",
+            context: "EBV prevalence varies significantly across populations and geographic regions. NMSS values research that captures this global diversity to understand MS etiology comprehensively.",
             suggestions: [
-              "Describe recruitment strategies for diverse populations",
-              "Mention partnerships with community organizations",
-              "Explain how you'll address health disparities"
+              "Describe recruitment from high and low EBV prevalence regions",
+              "Explain how you'll account for genetic diversity in EBV-MS relationships",
+              "Detail partnerships with international MS research centers",
+              "Mention strategies for including underrepresented populations in MS research"
             ]
           },
           {
-            id: "collaboration",
-            question: "What partnerships will you establish with MS clinics and patient organizations?",
-            category: "alignment" as const,
-            priority: "medium" as const,
-            context: "NMSS values collaborative research that involves the MS community.",
-            suggestions: [
-              "Identify specific MS centers for collaboration",
-              "Mention patient advisory board involvement",
-              "Describe community engagement strategies"
-            ]
-          },
-          {
-            id: "clinical-translation",
-            question: "What is your pathway from basic research to clinical application?",
+            id: "clinical-pathway",
+            question: "What is your specific pathway from identifying EBV-MS mechanisms to developing clinical interventions?",
             category: "feasibility" as const,
             priority: "high" as const,
-            context: "NMSS seeks research with clear clinical translation potential.",
+            context: "NMSS seeks clear translational pathways from basic research to clinical applications, especially for a researcher of your caliber with established industry connections.",
             suggestions: [
-              "Outline specific milestones for clinical testing",
-              "Identify potential regulatory pathways",
-              "Describe partnership opportunities with pharmaceutical companies"
+              "Outline specific milestones for EBV-based diagnostic tools",
+              "Describe potential partnerships with pharmaceutical companies for EBV-targeted therapies",
+              "Explain regulatory pathways for EBV prevention strategies",
+              "Detail how findings could inform MS treatment protocols"
             ]
           },
           {
-            id: "innovation",
-            question: "What novel approaches or technologies will you use?",
+            id: "mechanistic-insights",
+            question: "What specific mechanistic insights do you expect to uncover about EBV's role in MS pathogenesis?",
             category: "innovation" as const,
-            priority: "medium" as const,
-            context: "NMSS encourages innovative research approaches.",
+            priority: "high" as const,
+            context: "Your previous work established EBV as necessary for MS. NMSS is interested in understanding the specific mechanisms by which EBV triggers MS development.",
             suggestions: [
-              "Highlight cutting-edge techniques or technologies",
-              "Explain how your approach differs from existing methods",
-              "Describe potential for breakthrough discoveries"
+              "Describe molecular mechanisms of EBV-induced autoimmunity",
+              "Explain how EBV infection timing affects MS risk",
+              "Detail potential biomarkers for EBV-related MS risk",
+              "Mention novel techniques for studying EBV-MS interactions"
+            ]
+          },
+          {
+            id: "patient-engagement",
+            question: "How will you engage the MS patient community in your research, particularly regarding EBV testing and prevention?",
+            category: "alignment" as const,
+            priority: "medium" as const,
+            context: "NMSS emphasizes patient-centered research and community engagement, especially for research that could directly impact patient care.",
+            suggestions: [
+              "Describe patient advisory board involvement in study design",
+              "Explain how you'll communicate EBV-MS findings to patients",
+              "Detail patient education strategies about EBV and MS risk",
+              "Mention partnerships with MS patient advocacy groups"
+            ]
+          },
+          {
+            id: "long-term-impact",
+            question: "What is the potential long-term impact of your research on MS prevention and treatment over the next decade?",
+            category: "impact" as const,
+            priority: "medium" as const,
+            context: "Given your track record of high-impact research, NMSS is interested in understanding the broader implications of your EBV-MS work.",
+            suggestions: [
+              "Describe potential for EBV vaccination to prevent MS",
+              "Explain how findings could revolutionize MS treatment approaches",
+              "Detail potential for personalized MS risk assessment",
+              "Mention how research could inform global MS prevention strategies"
             ]
           }
         ]
@@ -164,10 +185,46 @@ const AIAnalysisSection = ({
 
   const getPriorityIcon = (priority: string) => {
     switch (priority) {
-      case 'high': return '🔴'
-      case 'medium': return '🟡'
-      case 'low': return '🟢'
-      default: return '⚪'
+      case 'high': 
+        return (
+          <div style={{ 
+            width: '12px', 
+            height: '12px', 
+            borderRadius: '50%', 
+            backgroundColor: '#DC3545',
+            display: 'inline-block'
+          }}></div>
+        )
+      case 'medium': 
+        return (
+          <div style={{ 
+            width: '12px', 
+            height: '12px', 
+            borderRadius: '50%', 
+            backgroundColor: '#FFC107',
+            display: 'inline-block'
+          }}></div>
+        )
+      case 'low': 
+        return (
+          <div style={{ 
+            width: '12px', 
+            height: '12px', 
+            borderRadius: '50%', 
+            backgroundColor: '#28A745',
+            display: 'inline-block'
+          }}></div>
+        )
+      default: 
+        return (
+          <div style={{ 
+            width: '12px', 
+            height: '12px', 
+            borderRadius: '50%', 
+            backgroundColor: '#6C757D',
+            display: 'inline-block'
+          }}></div>
+        )
     }
   }
 
@@ -202,33 +259,39 @@ const AIAnalysisSection = ({
       </p>
 
       {/* Analysis Summary */}
-      <div className="card" style={{ backgroundColor: 'rgba(255, 107, 53, 0.05)', border: '1px solid var(--nmss-orange)' }}>
+      <div className="card demo-highlight" style={{ backgroundColor: 'rgba(255, 107, 53, 0.05)', border: '1px solid var(--nmss-orange)' }}>
+        <div className="demo-badge">AI Analysis Complete</div>
         <h3 style={{ color: 'var(--nmss-orange)', marginBottom: '1rem' }}>
           AI Analysis Summary
         </h3>
         
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
-          <div>
-            <strong>Overall Score:</strong>
-            <div style={{ fontSize: '2rem', color: 'var(--nmss-orange)', fontWeight: 'bold' }}>
-              {analysisResults.overallScore}/100
-            </div>
+        <div className="demo-stats" style={{ marginBottom: '1.5rem' }}>
+          <div className="demo-stat-item">
+            <span className="demo-stat-number">{analysisResults.overallScore}/100</span>
+            <span className="demo-stat-label">Overall Score</span>
           </div>
-          <div>
-            <strong>NMSS Alignment:</strong>
-            <div className="priority-badges">
-              {analysisResults.nmssAlignment.map((priority, index) => (
-                <span key={index} className="badge badge-primary">
-                  {priority}
-                </span>
-              ))}
-            </div>
+          <div className="demo-stat-item">
+            <span className="demo-stat-number">{analysisResults.strengths.length}</span>
+            <span className="demo-stat-label">Key Strengths</span>
           </div>
-          <div>
-            <strong>Priority Questions:</strong>
-            <div style={{ fontSize: '1.5rem', color: 'var(--warning-orange)' }}>
-              {analysisResults.questions.filter(q => q.priority === 'high').length}
-            </div>
+          <div className="demo-stat-item">
+            <span className="demo-stat-number">{analysisResults.nmssAlignment.length}</span>
+            <span className="demo-stat-label">NMSS Alignments</span>
+          </div>
+          <div className="demo-stat-item">
+            <span className="demo-stat-number">{analysisResults.questions.filter(q => q.priority === 'high').length}</span>
+            <span className="demo-stat-label">High Priority Questions</span>
+          </div>
+        </div>
+
+        <div style={{ marginBottom: '1.5rem' }}>
+          <strong>NMSS Research Priorities Alignment:</strong>
+          <div className="priority-badges" style={{ marginTop: '0.5rem' }}>
+            {analysisResults.nmssAlignment.map((priority, index) => (
+              <span key={index} className="badge badge-primary" style={{ marginRight: '0.5rem', marginBottom: '0.5rem' }}>
+                {priority}
+              </span>
+            ))}
           </div>
         </div>
 
@@ -319,7 +382,23 @@ const AIAnalysisSection = ({
             </div>
 
             <div className="ai-suggestion" style={{ marginTop: '1rem' }}>
-              <h4 style={{ fontSize: '0.875rem', marginBottom: '0.5rem' }}>💡 AI Suggestions</h4>
+              <h4 style={{ fontSize: '0.875rem', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <div style={{ 
+                  width: '16px', 
+                  height: '16px', 
+                  borderRadius: '50%', 
+                  backgroundColor: 'var(--nmss-orange)', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '0.75rem',
+                  fontWeight: 'bold'
+                }}>
+                  AI
+                </div>
+                AI Suggestions
+              </h4>
               <ul style={{ marginLeft: '1rem', fontSize: '0.875rem' }}>
                 {question.suggestions.map((suggestion, suggestionIndex) => (
                   <li key={suggestionIndex} style={{ marginBottom: '0.25rem' }}>

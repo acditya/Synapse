@@ -4,11 +4,14 @@ export interface FormData {
   email: string
   affiliation: string
   orcid: string
+  hasPhD: boolean
+  hasMD: boolean
   
   // Research Profile
   scopusId: string
   googleScholarUrl: string
   previousSubmissions: string
+  additionalProfileInfo: string
   
   // Proposal Submission
   proposalFile: File | null

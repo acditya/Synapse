@@ -12,35 +12,44 @@ import type { FormData, ValidationErrors } from '../types/formTypes'
 const ApplicationPage = () => {
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState<FormData>({
-    // Applicant Information
-    fullName: '',
-    email: '',
-    affiliation: '',
-    orcid: '',
+    // Applicant Information - Alberto Ascherio's data
+    fullName: 'Alberto Ascherio',
+    email: 'alberto.ascherio@hsph.harvard.edu',
+    affiliation: 'Professor of Epidemiology and Nutrition, Harvard University',
+    orcid: '0000-0002-1234-5678',
+    hasPhD: true,
+    hasMD: false,
     
     // Research Profile
-    scopusId: '',
-    googleScholarUrl: '',
-    previousSubmissions: '',
+    scopusId: '7004212771',
+    googleScholarUrl: 'https://scholar.google.com/citations?user=ascherio_profile',
+    previousSubmissions: 'Previous research on vitamin D and multiple sclerosis risk, Parkinson\'s disease epidemiology, and cardiovascular disease prevention through nutrition.',
+    additionalProfileInfo: 'Recipient of the 2022 International Multiple Sclerosis Society Research Award for groundbreaking work on EBV-MS relationship. Director of the Harvard Neuroepidemiology Research Group. Principal Investigator on multiple NIH-funded longitudinal studies. Member of the World Health Organization Expert Panel on Neurological Disorders. Co-founder of the International MS Genetics Consortium. Published over 400 peer-reviewed articles with focus on environmental and genetic factors in neurological diseases.',
     
     // Proposal Submission
-    proposalFile: null,
-    proposalTitle: '',
-    abstract: '',
-    keywords: '',
+    proposalFile: new File([''], 'EBV_MS_Longitudinal_Study_Proposal.pdf', { type: 'application/pdf' }),
+    proposalTitle: 'Longitudinal Analysis of Epstein-Barr Virus and Multiple Sclerosis Risk: A Population-Based Cohort Study',
+    abstract: 'This study aims to investigate the longitudinal relationship between Epstein-Barr virus (EBV) infection and multiple sclerosis (MS) risk using a large population-based cohort. Building on our recent findings published in Science (2022) showing a strong association between EBV and MS, we propose to extend this research with a comprehensive longitudinal analysis of 50,000+ participants over 10 years. Our study will examine EBV seroconversion patterns, viral load dynamics, and their relationship to MS development, while controlling for genetic and environmental factors. This research has the potential to revolutionize our understanding of MS etiology and inform novel prevention strategies.',
+    keywords: 'Epstein-Barr virus, Multiple sclerosis, Longitudinal study, Epidemiology, Neuroinflammation, Autoimmune disease, Population-based cohort',
     
     // Funding & Ethics
-    fundingAmount: '',
-    conflictOfInterest: '',
-    ethicsDocuments: null,
+    fundingAmount: '500000',
+    conflictOfInterest: 'No conflicts of interest. All authors have no financial relationships with pharmaceutical companies or other entities that could influence this research.',
+    ethicsDocuments: new File([''], 'Harvard_IRB_Approval_EBV_MS_Longitudinal_Study_2024.pdf', { type: 'application/pdf' }),
     
     // AI-generated data
-    aiSummary: '',
-    researchPriorities: [],
-    autoKeywords: [],
+    aiSummary: 'Dr. Ascherio is a world-renowned epidemiologist with 189,679 citations and an h-index of 170. His research focuses on the epidemiology of neurological diseases, particularly multiple sclerosis and Parkinson\'s disease. He has published extensively on vitamin D, Epstein-Barr virus, and environmental factors in MS. His recent Science publication on EBV and MS has been cited over 2,000 times.',
+    researchPriorities: ['Multiple Sclerosis', 'Epstein-Barr Virus', 'Epidemiology', 'Neuroinflammation', 'Environmental Factors'],
+    autoKeywords: ['Epstein-Barr virus', 'Multiple sclerosis', 'Longitudinal study', 'Epidemiology', 'Neuroinflammation', 'Autoimmune disease', 'Population-based cohort', 'Vitamin D', 'Environmental factors'],
     
     // AI Analysis responses
-    aiResponses: {}
+    aiResponses: {
+      'research_expertise': 'Dr. Ascherio demonstrates exceptional expertise in MS epidemiology with 170 h-index and extensive publication record in top-tier journals including Science, Nature, and NEJM.',
+      'methodology_strength': 'Proposed longitudinal cohort study design is methodologically sound and builds on established epidemiological principles. Sample size of 50,000+ provides adequate statistical power.',
+      'innovation_potential': 'This research addresses a critical gap in understanding EBV-MS relationship and has potential to identify novel prevention strategies.',
+      'nmss_alignment': 'Highly aligned with NMSS research priorities focusing on MS etiology, prevention, and environmental factors.',
+      'collaboration_opportunities': 'Strong potential for collaboration with existing NMSS-funded researchers and international MS research networks.'
+    }
   })
   
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({})

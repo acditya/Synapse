@@ -22,7 +22,7 @@ const ReviewerHeader = () => {
         <div className="reviewer-header-right">
           <div className="notifications">
             <button className="notification-btn">
-              <span className="notification-icon">🔔</span>
+              <span className="notification-icon">NOTIF</span>
               {notifications > 0 && (
                 <span className="notification-badge">{notifications}</span>
               )}

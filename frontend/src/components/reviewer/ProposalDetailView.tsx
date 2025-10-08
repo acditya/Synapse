@@ -52,10 +52,10 @@ const ProposalDetailView = ({
   }
 
   const tabs = [
-    { id: 'overview', label: 'Overview', icon: '📊' },
-    { id: 'ai-insights', label: 'AI Insights', icon: '🤖' },
-    { id: 'conflicts', label: 'Conflicts', icon: '⚠️' },
-    { id: 'review', label: 'Review', icon: '✍️' }
+    { id: 'overview', label: 'Overview', icon: 'CHART' },
+    { id: 'ai-insights', label: 'AI Insights', icon: 'AI' },
+    { id: 'conflicts', label: 'Conflicts', icon: '!' },
+    { id: 'review', label: 'Review', icon: 'REVIEW' }
   ]
 
   return (
@@ -181,7 +181,7 @@ const ProposalDetailView = ({
                   <div className="conflicts-list">
                     {application.aiInsights.conflicts.map((conflict, index) => (
                       <div key={index} className="conflict-item">
-                        <span className="conflict-icon">⚠️</span>
+                        <span className="conflict-icon">!</span>
                         <span className="conflict-text">{conflict}</span>
                         <button className="resolve-btn">Mark as Resolved</button>
                       </div>
@@ -189,7 +189,7 @@ const ProposalDetailView = ({
                   </div>
                 ) : (
                   <div className="no-conflicts">
-                    <span className="no-conflicts-icon">✅</span>
+                    <span className="no-conflicts-icon">✓</span>
                     <p>No conflicts of interest detected</p>
                   </div>
                 )}

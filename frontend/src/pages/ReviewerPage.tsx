@@ -3,6 +3,7 @@ import ReviewerHeader from '../components/reviewer/ReviewerHeader'
 import DashboardOverview from '../components/reviewer/DashboardOverview'
 import ApplicationsTable from '../components/reviewer/ApplicationsTable'
 import ProposalDetailView from '../components/reviewer/ProposalDetailView'
+import { hardcodedApplications, type ApplicationData } from '../data/hardcodedApplications'
 import type { Application, ReviewerStats } from '../types/reviewerTypes'
 
 const ReviewerPage = () => {
@@ -16,7 +17,7 @@ const ReviewerPage = () => {
   const [applications, setApplications] = useState<Application[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
-  // Mock data initialization
+  // Load hardcoded applications data
   useEffect(() => {
     const loadReviewerData = async () => {
       setIsLoading(true)
@@ -24,79 +25,45 @@ const ReviewerPage = () => {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000))
       
-      // Mock reviewer stats
+      // Calculate reviewer stats from hardcoded data
+      const totalAssigned = hardcodedApplications.length
+      const pendingReviews = hardcodedApplications.filter(app => app.status === 'submitted' || app.status === 'under_review').length
+      const aiFlaggedConflicts = hardcodedApplications.filter(app => app.complianceStatus.irbApproved === false).length
+      const averageReviewTime = 2.5
+      
       setReviewerStats({
-        totalAssigned: 12,
-        pendingReviews: 8,
-        aiFlaggedConflicts: 3,
-        averageReviewTime: 2.5
+        totalAssigned,
+        pendingReviews,
+        aiFlaggedConflicts,
+        averageReviewTime
       })
       
-      // Mock applications data
-      const mockApplications: Application[] = [
-        {
-          id: 'APP-001',
-          applicantName: 'Dr. Sarah Chen',
-          proposalTitle: 'Neuroinflammation Biomarkers in Early MS Detection',
-          researchArea: 'Biomarkers, Neuroinflammation, Early Detection',
-          aiRelevanceScore: 87,
-          coiFlag: false,
-          status: 'pending',
-          submissionDate: '2024-01-15',
-          priority: 'high',
-          aiInsights: {
-            summary: 'Novel approach to identifying neuroinflammation biomarkers using advanced proteomics and machine learning algorithms.',
-            conflicts: [],
-            priorityAlignment: ['Neuroinflammation Research', 'Biomarker Development'],
-            suggestedQuestions: [
-              'How will you validate biomarker specificity for MS vs other neurological conditions?',
-              'What is your timeline for clinical translation?'
-            ]
-          }
-        },
-        {
-          id: 'APP-002',
-          applicantName: 'Prof. Michael Rodriguez',
-          proposalTitle: 'Microglial Activation Patterns in Progressive MS',
-          researchArea: 'Microglia, Progressive MS, Neuroimaging',
-          aiRelevanceScore: 92,
-          coiFlag: true,
-          status: 'under_review',
-          submissionDate: '2024-01-12',
-          priority: 'high',
-          aiInsights: {
-            summary: 'Comprehensive study of microglial activation using advanced neuroimaging and molecular techniques.',
-            conflicts: ['Co-author relationship with previous NMSS grant recipient'],
-            priorityAlignment: ['Neuroinflammation Research', 'Progressive MS'],
-            suggestedQuestions: [
-              'How will you address potential bias from co-author relationships?',
-              'What controls will you implement for microglial activation studies?'
-            ]
-          }
-        },
-        {
-          id: 'APP-003',
-          applicantName: 'Dr. Emily Watson',
-          proposalTitle: 'Patient-Reported Outcomes in MS Treatment',
-          researchArea: 'Patient Outcomes, Quality of Life, Treatment',
-          aiRelevanceScore: 78,
-          coiFlag: false,
-          status: 'pending',
-          submissionDate: '2024-01-18',
-          priority: 'medium',
-          aiInsights: {
-            summary: 'Longitudinal study examining patient-reported outcomes across different MS treatment modalities.',
-            conflicts: [],
-            priorityAlignment: ['Patient Care', 'Treatment Outcomes'],
-            suggestedQuestions: [
-              'How will you ensure diverse patient representation?',
-              'What validated instruments will you use for outcome measurement?'
-            ]
-          }
+      // Convert hardcoded applications to reviewer format
+      const reviewerApplications: Application[] = hardcodedApplications.map(app => ({
+        id: app.id,
+        applicantName: app.fullName,
+        proposalTitle: app.proposalTitle,
+        researchArea: app.researchPriorities.join(', '),
+        aiRelevanceScore: app.reviewScore || 0,
+        coiFlag: app.conflictOfInterest.includes('conflicts') ? false : true,
+        status: app.status === 'under_review' ? 'pending' : app.status,
+        submissionDate: app.submissionDate,
+        priority: app.priority,
+        aiInsights: {
+          summary: app.aiSummary,
+          conflicts: app.conflictOfInterest.includes('conflicts') ? ['No conflicts identified'] : [],
+          priorityAlignment: app.researchPriorities,
+          strengths: app.reviewerComments || [],
+          concerns: app.riskAssessment.factors,
+          suggestedQuestions: [
+            'How will you ensure diverse participant representation?',
+            'What is your timeline for clinical translation?',
+            'How will you address potential confounding factors?'
+          ]
         }
-      ]
+      }))
       
-      setApplications(mockApplications)
+      setApplications(reviewerApplications)
       setIsLoading(false)
     }
     

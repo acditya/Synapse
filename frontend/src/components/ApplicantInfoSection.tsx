@@ -118,7 +118,7 @@ const ApplicantInfoSection = ({
 
       <div className="form-group">
         <label htmlFor="affiliation" className="form-label">
-          Affiliation / Institution *
+          UAE Institution / Affiliation *
         </label>
         <input
           type="text"
@@ -126,11 +126,41 @@ const ApplicantInfoSection = ({
           className="form-input"
           value={formData.affiliation}
           onChange={(e) => updateFormData({ affiliation: e.target.value })}
-          placeholder="University, Hospital, Research Institute, etc."
+          placeholder="UAE-based University, Hospital, Research Institute, etc."
           required
         />
         {validationErrors.affiliation && (
           <div className="form-error">{validationErrors.affiliation}</div>
+        )}
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="qualifications" className="form-label">
+          Professional Qualifications *
+        </label>
+        <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.5rem' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <input
+              type="checkbox"
+              checked={formData.hasPhD || false}
+              onChange={(e) => updateFormData({ hasPhD: e.target.checked })}
+            />
+            PhD
+          </label>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <input
+              type="checkbox"
+              checked={formData.hasMD || false}
+              onChange={(e) => updateFormData({ hasMD: e.target.checked })}
+            />
+            MD
+          </label>
+        </div>
+        <div style={{ fontSize: '0.875rem', color: 'var(--nmss-medium-gray)' }}>
+          At least one qualification (PhD and/or MD) is required for NMSS eligibility
+        </div>
+        {validationErrors.qualifications && (
+          <div className="form-error">{validationErrors.qualifications}</div>
         )}
       </div>
 
@@ -154,7 +184,27 @@ const ApplicantInfoSection = ({
         )}
         {formData.orcid && !validationErrors.orcid && (
           <div className="validation-message success">
-            Valid ORCID format
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <img 
+                src="/Alberto-Ascherio-1024x576.jpg" 
+                alt="Alberto Ascherio" 
+                style={{ 
+                  width: '40px', 
+                  height: '40px', 
+                  borderRadius: '50%', 
+                  objectFit: 'cover',
+                  border: '2px solid var(--nmss-orange)'
+                }}
+              />
+              <div>
+                <div style={{ fontWeight: 'bold', color: 'var(--nmss-orange)' }}>
+                  ✓ Researcher Identified
+                </div>
+                <div style={{ fontSize: '0.875rem', color: 'var(--nmss-medium-gray)' }}>
+                  Profile verified through ORCID
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>

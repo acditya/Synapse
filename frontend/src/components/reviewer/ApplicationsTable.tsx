@@ -127,12 +127,12 @@ const ApplicationsTable = ({
               <div className="application-flags">
                 {application.coiFlag && (
                   <span className="coi-flag">
-                    ⚠️ COI Detected
+                    ! COI Detected
                   </span>
                 )}
                 {application.aiInsights.conflicts.length > 0 && (
                   <span className="conflict-flag">
-                    🔍 AI Conflicts
+                    SEARCH AI Conflicts
                   </span>
                 )}
               </div>
