@@ -6,6 +6,8 @@ export interface FormData {
   orcid: string
   hasPhD: boolean
   hasMD: boolean
+  scopusUrl?: string
+  researcherImage?: string
   
   // Research Profile
   scopusId: string

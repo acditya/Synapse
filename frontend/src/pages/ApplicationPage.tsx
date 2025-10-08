@@ -48,7 +48,11 @@ const ApplicationPage = () => {
       'methodology_strength': 'Proposed longitudinal cohort study design is methodologically sound and builds on established epidemiological principles. Sample size of 50,000+ provides adequate statistical power.',
       'innovation_potential': 'This research addresses a critical gap in understanding EBV-MS relationship and has potential to identify novel prevention strategies.',
       'nmss_alignment': 'Highly aligned with NMSS research priorities focusing on MS etiology, prevention, and environmental factors.',
-      'collaboration_opportunities': 'Strong potential for collaboration with existing NMSS-funded researchers and international MS research networks.'
+      'collaboration_opportunities': 'Strong potential for collaboration with existing NMSS-funded researchers and international MS research networks.',
+      'ebv-prevention': 'Our longitudinal study will provide critical data for developing EBV vaccination strategies targeting high-risk populations. We will establish EBV seroconversion patterns and viral load thresholds that correlate with MS risk, enabling identification of individuals who would benefit most from EBV prevention strategies. Our findings will inform public health policies by providing evidence-based recommendations for EBV monitoring in MS prevention programs. Additionally, we anticipate identifying specific EBV proteins or genetic variants that could serve as targets for EBV-directed therapies in MS treatment.',
+      'global-representation': 'We have established partnerships with 15 international MS research centers across North America, Europe, Asia, and Africa to ensure comprehensive global representation. Our recruitment strategy specifically targets regions with varying EBV prevalence rates (from 60% in developed countries to 95% in developing regions) to capture the full spectrum of EBV-MS relationships. We will include diverse genetic populations through collaborations with the International MS Genetics Consortium and will implement culturally sensitive recruitment strategies to include underrepresented populations in MS research.',
+      'clinical-pathway': 'Our translational pathway includes three key phases: (1) Identification of EBV-MS biomarkers through longitudinal analysis, (2) Development of EBV-based diagnostic tools in collaboration with diagnostic companies, and (3) Clinical trials for EBV-targeted therapies. We have preliminary agreements with pharmaceutical partners for EBV vaccine development and will pursue FDA/EMA regulatory pathways for EBV prevention strategies. Our findings will directly inform MS treatment protocols by identifying patients who would benefit from EBV-directed interventions.',
+      'mechanistic-insights': 'We expect to uncover specific molecular mechanisms of EBV-induced autoimmunity, including how EBV infection timing and viral load affect MS risk. Our study will identify novel biomarkers for EBV-related MS risk and develop innovative techniques for studying EBV-MS interactions using single-cell RNA sequencing and proteomic analysis. We anticipate discovering how EBV infection patterns in adolescence and young adulthood create a "window of vulnerability" for MS development.'
     }
   })
   
@@ -101,11 +105,15 @@ const ApplicationPage = () => {
   const handleNext = () => {
     if (validateStep(currentStep)) {
       setCurrentStep(prev => Math.min(prev + 1, totalSteps))
+      // Scroll to top of the page
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 
   const handlePrevious = () => {
     setCurrentStep(prev => Math.max(prev - 1, 1))
+    // Scroll to top of the page
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleSubmit = async () => {
@@ -238,7 +246,7 @@ const ApplicationPage = () => {
               </button>
             )}
             
-            {currentStep < 5 ? (
+            {currentStep < totalSteps ? (
               <button
                 type="button"
                 className="btn btn-primary"

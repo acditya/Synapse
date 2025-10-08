@@ -49,11 +49,29 @@ const ApplicationsListPage = () => {
   return (
     <div style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
       <div style={{ marginBottom: '2rem' }}>
-        <h1 style={{ color: 'var(--nmss-black)', marginBottom: '0.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem', gap: '1rem' }}>
+          <img 
+            src="/National-MS-Society-1024x1024.avif" 
+            alt="National Multiple Sclerosis Society Logo" 
+            style={{ 
+              height: '60px', 
+              width: 'auto'
+            }}
+          />
+          <img 
+            src="/image-removebg-preview (36).png" 
+            alt="Synapse Logo" 
+            style={{ 
+              height: '50px',
+              width: 'auto'
+            }}
+          />
+        </div>
+        <h1 style={{ color: 'var(--nmss-black)', marginBottom: '0.5rem', textAlign: 'center' }}>
           Research Grant Applications
         </h1>
         <p style={{ color: 'var(--nmss-medium-gray)' }}>
-          Review and manage submitted research grant applications
+          Review and manage submitted research grant applications with intelligent insights and automated analysis
         </p>
       </div>
 

@@ -820,14 +820,48 @@ const ResearchProfileSection = ({
 
               <div
                 className="file-upload-area"
-                style={{ cursor: 'pointer' }}
+                style={{ 
+                  cursor: 'pointer',
+                  backgroundColor: '#F0F8FF',
+                  border: '2px solid #4A90E2',
+                  borderRadius: '0.5rem',
+                  padding: '1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1rem'
+                }}
               >
-                <div className="file-upload-icon">📄</div>
+                <div style={{ 
+                  width: '40px', 
+                  height: '40px', 
+                  backgroundColor: '#4A90E2', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '1.25rem'
+                }}>
+                  ✓
+                </div>
                 <div>
-                  <strong>Click to upload CVs/GCPs for Research Team</strong>
-                  <br />
-                  <span style={{ color: 'var(--medium-gray)' }}>
-                    PDF or Word document (max 10MB)
+                  <div style={{ fontWeight: 'bold', color: '#2C3E50', marginBottom: '0.25rem' }}>
+                    Harvard_Research_Team_CVs_GCPs_2024.pdf
+                  </div>
+                  <div style={{ fontSize: '0.875rem', color: '#7F8C8D' }}>
+                    Uploaded successfully • 2.3 MB • PDF Document
+                  </div>
+                </div>
+                <div style={{ marginLeft: 'auto' }}>
+                  <span style={{
+                    backgroundColor: '#7ED321',
+                    color: 'white',
+                    padding: '0.25rem 0.75rem',
+                    borderRadius: '0.25rem',
+                    fontSize: '0.75rem',
+                    fontWeight: 'bold'
+                  }}>
+                    UPLOADED
                   </span>
                 </div>
               </div>
@@ -853,14 +887,48 @@ const ResearchProfileSection = ({
 
               <div
                 className="file-upload-area"
-                style={{ cursor: 'pointer' }}
+                style={{ 
+                  cursor: 'pointer',
+                  backgroundColor: '#F0F8FF',
+                  border: '2px solid #4A90E2',
+                  borderRadius: '0.5rem',
+                  padding: '1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1rem'
+                }}
               >
-                <div className="file-upload-icon">📄</div>
+                <div style={{ 
+                  width: '40px', 
+                  height: '40px', 
+                  backgroundColor: '#4A90E2', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '1.25rem'
+                }}>
+                  ✓
+                </div>
                 <div>
-                  <strong>Click to upload Consent Form</strong>
-                  <br />
-                  <span style={{ color: 'var(--medium-gray)' }}>
-                    PDF or Word document (max 10MB)
+                  <div style={{ fontWeight: 'bold', color: '#2C3E50', marginBottom: '0.25rem' }}>
+                    EBV_MS_Study_Informed_Consent_Form_2024.pdf
+                  </div>
+                  <div style={{ fontSize: '0.875rem', color: '#7F8C8D' }}>
+                    Uploaded successfully • 1.8 MB • PDF Document
+                  </div>
+                </div>
+                <div style={{ marginLeft: 'auto' }}>
+                  <span style={{
+                    backgroundColor: '#7ED321',
+                    color: 'white',
+                    padding: '0.25rem 0.75rem',
+                    borderRadius: '0.25rem',
+                    fontSize: '0.75rem',
+                    fontWeight: 'bold'
+                  }}>
+                    UPLOADED
                   </span>
                 </div>
               </div>

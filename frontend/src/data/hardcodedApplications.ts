@@ -9,6 +9,14 @@ export interface ApplicationData extends FormData {
   priority: 'high' | 'medium' | 'low'
   estimatedDuration: string
   researchImpact: string
+  researchMetrics?: {
+    totalCitations: number
+    hIndex: number
+    i10Index: number
+    citationsSince2020: number
+    totalPublications: number
+    recentPublications: number
+  }
   budgetBreakdown: {
     personnel: number
     equipment: number
@@ -47,7 +55,7 @@ export const hardcodedApplications: ApplicationData[] = [
     // Applicant Information
     fullName: 'Dr. Alberto Ascherio',
     email: 'alberto.ascherio@hsph.harvard.edu',
-    affiliation: 'Professor of Epidemiology and Nutrition, Harvard University',
+    affiliation: 'Professor of Epidemiology and Nutrition, Harvard T.H. Chan School of Public Health',
     orcid: '0000-0002-1234-5678',
     hasPhD: true,
     hasMD: false,
@@ -55,8 +63,20 @@ export const hardcodedApplications: ApplicationData[] = [
     // Research Profile
     scopusId: '7004212771',
     googleScholarUrl: 'https://scholar.google.com/citations?user=ascherio_profile',
+    scopusUrl: 'https://www.scopus.com/authid/detail.uri?authorId=7004212771',
+    researcherImage: '/Alberto-Ascherio-1024x576.jpg',
     previousSubmissions: 'Previous research on vitamin D and multiple sclerosis risk, Parkinson\'s disease epidemiology, and cardiovascular disease prevention through nutrition.',
     additionalProfileInfo: 'Recipient of the 2022 International Multiple Sclerosis Society Research Award for groundbreaking work on EBV-MS relationship. Director of the Harvard Neuroepidemiology Research Group. Principal Investigator on multiple NIH-funded longitudinal studies. Member of the World Health Organization Expert Panel on Neurological Disorders. Co-founder of the International MS Genetics Consortium. Published over 400 peer-reviewed articles with focus on environmental and genetic factors in neurological diseases.',
+    
+    // Detailed Research Metrics
+    researchMetrics: {
+      totalCitations: 189679,
+      hIndex: 170,
+      i10Index: 423,
+      citationsSince2020: 52756,
+      totalPublications: 412,
+      recentPublications: 28
+    },
     
     // Proposal Submission
     proposalFile: new File([''], 'EBV_MS_Longitudinal_Study_Proposal.pdf', { type: 'application/pdf' }),
@@ -169,6 +189,8 @@ export const hardcodedApplications: ApplicationData[] = [
     
     scopusId: '1234567890',
     googleScholarUrl: 'https://scholar.google.com/citations?user=sarah_johnson',
+    scopusUrl: 'https://www.scopus.com/authid/detail.uri?authorId=1234567890',
+    researcherImage: '/Alberto-Ascherio-1024x576.jpg', // Using same image for demo
     previousSubmissions: 'Previous research on MS treatment outcomes in Middle Eastern populations.',
     additionalProfileInfo: 'Specialist in MS treatment optimization with focus on Middle Eastern patient populations. Published 25+ papers on MS treatment outcomes.',
     

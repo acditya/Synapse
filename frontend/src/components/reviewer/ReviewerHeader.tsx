@@ -8,11 +8,21 @@ const ReviewerHeader = () => {
     <header className="reviewer-header">
       <div className="reviewer-header-content">
         <div className="reviewer-header-left">
-          <img 
-            src="/National-MS-Society-1024x1024.avif" 
-            alt="NMSS Logo" 
-            className="reviewer-logo"
-          />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <img 
+              src="/National-MS-Society-1024x1024.avif" 
+              alt="NMSS Logo" 
+              className="reviewer-logo"
+            />
+            <img 
+              src="/image-removebg-preview (36).png" 
+              alt="Synapse Logo" 
+              style={{ 
+                height: '50px',
+                width: 'auto'
+              }}
+            />
+          </div>
           <div className="reviewer-title">
             <h1>Reviewer Dashboard</h1>
             <p>AI-Assisted Grant Review System</p>
