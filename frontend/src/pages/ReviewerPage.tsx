@@ -35,7 +35,7 @@ const ReviewerPage = () => {
     }
   }
 
-  return (
+    return (
     <div style={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
       {/* Header */}
       <header style={{ 
@@ -389,9 +389,9 @@ const ReviewerPage = () => {
             <div style={{ fontSize: '0.875rem', color: 'var(--nmss-medium-gray)' }}>
               <strong>AI Recommendations:</strong> 3 potential collaborators identified with complementary expertise in 
               EBV research, MS epidemiology, and longitudinal study design.
-            </div>
           </div>
         </div>
+      </div>
 
         {/* Detailed Application Review */}
         <div style={{ 
