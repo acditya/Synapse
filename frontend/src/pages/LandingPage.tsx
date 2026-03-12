@@ -304,7 +304,7 @@ const LandingPage = () => {
             <div className="acceptance-live-top">
               <span className="acceptance-live-item">
                 <span className="acceptance-dot" />
-                Live pipeline simulation
+                Live pipeline
               </span>
               <span className="acceptance-live-item">Stage {activeStageNumber} of {acceptanceStages.length}</span>
               <span className="acceptance-live-item">{globalProgress.toFixed(0)}% complete</span>
