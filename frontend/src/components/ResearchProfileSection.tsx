@@ -286,6 +286,9 @@ const ResearchProfileSection = ({
           placeholder="Describe any previous research proposals submitted to NMSS, including titles, years, and outcomes..."
           rows={4}
         />
+        {validationErrors.previousSubmissions && (
+          <div className="form-error">{validationErrors.previousSubmissions}</div>
+        )}
         {previousSubmissionWarning && (
           <div className="validation-message warning">
             {previousSubmissionWarning}
@@ -308,6 +311,9 @@ const ResearchProfileSection = ({
             placeholder="Add any additional information about your research background, collaborations, awards, or other relevant details that would strengthen your application..."
             rows={4}
           />
+          {validationErrors.additionalProfileInfo && (
+            <div className="form-error">{validationErrors.additionalProfileInfo}</div>
+          )}
         </div>
 
         {/* Collaborators Section */}

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { hardcodedApplications } from '../data/hardcodedApplications'
 
 const ReviewerDashboard = () => {
@@ -126,6 +127,21 @@ const ReviewerDashboard = () => {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: '1400px', margin: '0 auto' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <Link
+                to="/"
+                style={{
+                  backgroundColor: 'transparent',
+                  border: '1px solid #E5E7EB',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: '#2C3E50',
+                  fontSize: '0.875rem',
+                  fontWeight: 600
+                }}
+              >
+                Home
+              </Link>
               <button
                 onClick={() => setSelectedApplication(null)}
                 style={{
@@ -673,6 +689,21 @@ const ReviewerDashboard = () => {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: '1400px', margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <Link
+                to="/"
+                style={{
+                  backgroundColor: 'transparent',
+                  border: '1px solid #E5E7EB',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: '#2C3E50',
+                  fontSize: '0.875rem',
+                  fontWeight: 600
+                }}
+              >
+                Home
+              </Link>
             <img 
               src="/National-MS-Society-1024x1024.avif" 
               alt="NMSS Logo" 

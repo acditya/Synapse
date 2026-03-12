@@ -323,6 +323,9 @@ const ProposalSubmissionSection = ({
             </div>
           </div>
         )}
+        {validationErrors.keywords && (
+          <div className="form-error">{validationErrors.keywords}</div>
+        )}
       </div>
 
       {/* Collaborators Section */}

@@ -1,11 +1,15 @@
 interface ProgressIndicatorProps {
   currentStep: number
   totalSteps: number
+  completedSteps: Set<number>
+  maxUnlockedStep: number
   onStepClick: (step: number) => void
 }
 
 const ProgressIndicator = ({
   currentStep,
+  completedSteps,
+  maxUnlockedStep,
   onStepClick
 }: ProgressIndicatorProps) => {
   const steps = [
@@ -19,21 +23,26 @@ const ProgressIndicator = ({
 
   return (
     <div className="form-steps">
-      {steps.map((step) => (
-        <div
-          key={step.number}
-          className={`step ${
-            step.number === currentStep 
-              ? 'active' 
-              : step.number < currentStep 
-                ? 'completed' 
-                : ''
-          }`}
-          onClick={() => onStepClick(step.number)}
-          style={{ cursor: 'pointer' }}
-        >
+      {steps.map((step) => {
+        const isCompleted = completedSteps.has(step.number)
+        const isLocked = step.number > maxUnlockedStep
+
+        return (
+          <div
+            key={step.number}
+            className={`step ${
+              step.number === currentStep
+                ? 'active'
+                : isCompleted
+                  ? 'completed'
+                  : ''
+            } ${isLocked ? 'locked' : ''}`}
+            onClick={() => !isLocked && onStepClick(step.number)}
+            style={{ cursor: isLocked ? 'not-allowed' : 'pointer' }}
+            aria-disabled={isLocked}
+          >
           <div className="step-number">
-            {step.number < currentStep ? '✓' : step.number}
+            {isCompleted ? '✓' : step.number}
           </div>
           <div>
             <div style={{ fontWeight: 600 }}>{step.title}</div>
@@ -42,7 +51,8 @@ const ProgressIndicator = ({
             </div>
           </div>
         </div>
-      ))}
+        )
+      })}
     </div>
   )
 }

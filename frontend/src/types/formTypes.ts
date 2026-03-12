@@ -39,9 +39,12 @@ export interface ValidationErrors {
   fullName?: string
   email?: string
   affiliation?: string
+  qualifications?: string
   orcid?: string
   scopusId?: string
   googleScholarUrl?: string
+  previousSubmissions?: string
+  additionalProfileInfo?: string
   proposalFile?: string
   proposalTitle?: string
   abstract?: string
@@ -49,6 +52,7 @@ export interface ValidationErrors {
   fundingAmount?: string
   conflictOfInterest?: string
   ethicsDocuments?: string
+  aiResponses?: string
 }
 
 export interface ResearchPriority {

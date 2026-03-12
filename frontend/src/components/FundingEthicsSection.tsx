@@ -172,6 +172,9 @@ const FundingEthicsSection = ({
             placeholder="List any co-authors, collaborators, funding sources, or other relationships that might create a conflict of interest..."
             rows={4}
           />
+          {validationErrors.conflictOfInterest && (
+            <div className="form-error">{validationErrors.conflictOfInterest}</div>
+          )}
           
           {conflictWarnings.length > 0 && (
             <div style={{ marginTop: '0.5rem' }}>

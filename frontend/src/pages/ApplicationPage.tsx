@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import HeroSection from '../components/HeroSection'
 import ApplicantInfoSection from '../components/ApplicantInfoSection'
 import ResearchProfileSection from '../components/ResearchProfileSection'
@@ -11,6 +11,7 @@ import type { FormData, ValidationErrors } from '../types/formTypes'
 
 const ApplicationPage = () => {
   const [currentStep, setCurrentStep] = useState(1)
+  const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set())
   const [formData, setFormData] = useState<FormData>({
     // Applicant Information - Alberto Ascherio's data
     fullName: 'Alberto Ascherio',
@@ -70,31 +71,90 @@ const ApplicationPage = () => {
     setValidationErrors(prev => ({ ...prev, ...errors }))
   }, [])
 
+  const requiredAiQuestions = ['ebv-prevention', 'global-representation', 'clinical-pathway', 'mechanistic-insights']
+
   const validateStep = (step: number): boolean => {
     const errors: Partial<ValidationErrors> = {}
     
     switch (step) {
       case 1: // Applicant Information
         if (!formData.fullName.trim()) errors.fullName = 'Full name is required'
+        else if (formData.fullName.trim().length < 3) errors.fullName = 'Full name must be at least 3 characters'
         if (!formData.email.trim()) errors.email = 'Email is required'
         else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
           errors.email = 'Please enter a valid email address'
         }
         if (!formData.affiliation.trim()) errors.affiliation = 'Affiliation is required'
+        else if (formData.affiliation.trim().length < 5) errors.affiliation = 'Affiliation should be more specific'
+        if (!formData.hasPhD && !formData.hasMD) errors.qualifications = 'Select at least one qualification (PhD or MD)'
+        if (formData.orcid.trim() && !/^\d{4}-\d{4}-\d{4}-\d{4}$/.test(formData.orcid.trim())) {
+          errors.orcid = 'ORCID must be in the format 0000-0000-0000-0000'
+        }
         break
         
       case 2: // Research Profile
-        // Optional fields, no validation required
+        if (!formData.scopusId.trim() && !formData.googleScholarUrl.trim()) {
+          errors.scopusId = 'Provide either a Scopus ID or Google Scholar URL'
+          errors.googleScholarUrl = 'Provide either a Google Scholar URL or Scopus ID'
+        }
+        if (formData.scopusId.trim() && !/^\d{8,}$/.test(formData.scopusId.trim())) {
+          errors.scopusId = 'Scopus ID must be numeric and at least 8 digits'
+        }
+        if (
+          formData.googleScholarUrl.trim() &&
+          !/^https:\/\/scholar\.google\.com\/citations\?user=[\w-]+/.test(formData.googleScholarUrl.trim())
+        ) {
+          errors.googleScholarUrl = 'Google Scholar URL must look like https://scholar.google.com/citations?user=...'
+        }
+        if (formData.previousSubmissions.trim().length < 30) {
+          errors.previousSubmissions = 'Please add at least 30 characters about previous submissions'
+        }
+        if (formData.additionalProfileInfo.trim().length < 50) {
+          errors.additionalProfileInfo = 'Please add at least 50 characters of profile context'
+        }
         break
         
       case 3: // Proposal Submission
         if (!formData.proposalFile) errors.proposalFile = 'Research proposal file is required'
+        else if (formData.proposalFile.size > 10 * 1024 * 1024) errors.proposalFile = 'Proposal file must be under 10MB'
         if (!formData.proposalTitle.trim()) errors.proposalTitle = 'Proposal title is required'
+        else if (formData.proposalTitle.trim().length < 15) errors.proposalTitle = 'Proposal title must be at least 15 characters'
         if (!formData.abstract.trim()) errors.abstract = 'Abstract is required'
+        else if (formData.abstract.trim().length < 250) errors.abstract = 'Abstract must be at least 250 characters'
+        const keywordsCount = formData.keywords
+          .split(',')
+          .map(keyword => keyword.trim())
+          .filter(Boolean).length
+        if (keywordsCount < 3) errors.keywords = 'Please provide at least 3 keywords'
         break
         
       case 4: // Funding & Ethics
-        // Optional fields, no validation required
+        if (!formData.fundingAmount.trim()) errors.fundingAmount = 'Funding amount is required'
+        else {
+          const fundingAmount = Number(formData.fundingAmount)
+          if (Number.isNaN(fundingAmount) || fundingAmount <= 0) {
+            errors.fundingAmount = 'Funding amount must be greater than zero'
+          } else if (fundingAmount > 500000) {
+            errors.fundingAmount = 'Funding cannot exceed AED 500,000 for this call'
+          }
+        }
+        if (!formData.conflictOfInterest.trim()) errors.conflictOfInterest = 'Conflict of interest statement is required'
+        else if (formData.conflictOfInterest.trim().length < 20) {
+          errors.conflictOfInterest = 'Conflict of interest statement is too short'
+        }
+        if (!formData.ethicsDocuments) errors.ethicsDocuments = 'Ethics approval document is required'
+        else if (formData.ethicsDocuments.size > 5 * 1024 * 1024) {
+          errors.ethicsDocuments = 'Ethics file must be under 5MB'
+        }
+        break
+      case 5: {
+        const unanswered = requiredAiQuestions.filter((id) => !formData.aiResponses[id] || formData.aiResponses[id].trim().length < 80)
+        if (unanswered.length > 0) {
+          errors.aiResponses = 'Please provide complete responses for all high-priority AI clarification questions'
+        }
+        break
+      }
+      case 6:
         break
     }
     
@@ -104,6 +164,11 @@ const ApplicationPage = () => {
 
   const handleNext = () => {
     if (validateStep(currentStep)) {
+      setCompletedSteps((prev) => {
+        const next = new Set(prev)
+        next.add(currentStep)
+        return next
+      })
       setCurrentStep(prev => Math.min(prev + 1, totalSteps))
       // Scroll to top of the page
       window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -117,7 +182,10 @@ const ApplicationPage = () => {
   }
 
   const handleSubmit = async () => {
-    if (!validateStep(currentStep)) return
+    if (!validateStep(5)) {
+      setCurrentStep(5)
+      return
+    }
     
     setIsSubmitting(true)
     
@@ -129,6 +197,7 @@ const ApplicationPage = () => {
       console.log('Submitting form data:', formData)
       
       setIsSubmitted(true)
+      setCompletedSteps(new Set([1, 2, 3, 4, 5, 6]))
     } catch (error) {
       console.error('Submission error:', error)
       // Handle error state
@@ -197,6 +266,21 @@ const ApplicationPage = () => {
     }
   }
 
+  const maxUnlockedStep = useMemo(() => {
+    let unlocked = 1
+    while (completedSteps.has(unlocked) && unlocked < totalSteps) {
+      unlocked += 1
+    }
+    return unlocked
+  }, [completedSteps, totalSteps])
+
+  const handleStepClick = (step: number) => {
+    if (step <= maxUnlockedStep) {
+      setCurrentStep(step)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
+
   if (isSubmitted) {
     return (
       <div className="container">
@@ -229,10 +313,16 @@ const ApplicationPage = () => {
         <ProgressIndicator
           currentStep={currentStep}
           totalSteps={totalSteps}
-          onStepClick={setCurrentStep}
+          completedSteps={completedSteps}
+          maxUnlockedStep={maxUnlockedStep}
+          onStepClick={handleStepClick}
         />
         
         {renderCurrentStep()}
+
+        {validationErrors.aiResponses && currentStep === 5 && (
+          <div className="validation-message error">{validationErrors.aiResponses}</div>
+        )}
         
         {currentStep < 6 && (
           <div className="form-navigation">
