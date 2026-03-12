@@ -1,4 +1,4 @@
-# NMSS Synapse Database Setup
+# NMSS Synapse Database Setup 
 
 ## Overview
 This document provides comprehensive instructions for setting up the NMSS Synapse database using Supabase.
